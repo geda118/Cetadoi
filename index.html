@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تولید زمان‌بندی دقیق</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      direction: rtl;
+      text-align: center;
+      padding: 40px;
+      background: #f4f4f4;
+    }
+    .timestamp-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+    .output {
+      font-size: 18px;
+      margin: 15px 0;
+      background: #eee;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="timestamp-box">
+    <h2>ایجاد Timestamp با ساعت رسمی ایران</h2>
+    <p>برای کپی کردن زمان دقیق، روی دکمه زیر کلیک کنید:</p>
+    <button onclick="generateTimestamp()">تولید و کپی Timestamp</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    function toPersianDigits(str) {
+      const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+      return str.replace(/\d/g, d => persian[d]);
+    }
+
+    function generateTimestamp() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = (now.getMonth() + 1).toString().padStart(2, '0');
+      const dd = now.getDate().toString().padStart(2, '0');
+      const hh = now.getHours().toString().padStart(2, '0');
+      const min = now.getMinutes().toString().padStart(2, '0');
+      const ss = now.getSeconds().toString().padStart(2, '0');
+
+      const timestampFa = `⏱ [${toPersianDigits(`${yyyy}/${mm}/${dd}`)} | ${toPersianDigits(`${hh}:${min}:${ss}`)}]`;
+      const timestampEn = `⏱ [${yyyy}/${mm}/${dd} | ${hh}:${min}:${ss}]`;
+
+      const full = `${timestampFa}\n${timestampEn}`;
+      navigator.clipboard.writeText(full);
+      document.getElementById('output').innerText = full + "\n(کپی شد!)";
+    }
+  </script>
+</body>
+</html>
